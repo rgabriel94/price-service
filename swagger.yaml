@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Price API
+  description: Price api para amaris
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/gabrielra94/Price-API/1.0.0
+paths:
+  '/api/prices/rate':
+    get:
+      parameters: 
+        - name: application_date
+          in: query
+          description: Application date
+          required: true
+          example: '2020-06-14-00.00.00'
+          schema:
+            type: string
+        - name: product_id
+          in: query
+          description: Product id
+          required: true
+          example: '35455'
+          schema:
+            type: string
+        - name: brand_id
+          in: query
+          description: Brand id
+          required: true
+          example: '1'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+              example:
+                id: '1'
+                brand_id: '1'
+                start_date: '2020-06-14-00.00.00'
+                end_date: '2020-12-31-23.59.59'
+                price_list: '1'
+                product_id: '35455'
+                price: '35.50'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: 'Bad request.'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: 'Price not found.' 
+
+components:
+  schemas:
+    Price:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: false
+          example: '1'
+        brand_id:
+          type: integer
+          nullable: false
+          example: '1'
+        start_date:
+          type: string
+          nullable: false
+          example: '2020-06-14-00.00.00'
+        end_date:
+          type: string
+          nullable: false
+          example: '2020-12-31-23.59.59'
+        price_list:
+          type: integer
+          nullable: false
+          example: '1'
+        product_id:
+          type: integer
+          nullable: false
+          example: '35455'
+        price:
+          type: number
+          nullable: false
+          example: '35.50'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: false
+          example: 'Price not found.'
